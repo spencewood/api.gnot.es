@@ -1,6 +1,6 @@
 config = require './config'
 
-routes = (server) ->
+module.exports = (server) ->
     ###
      Cross-origin for all calls
     ###
@@ -10,5 +10,3 @@ routes = (server) ->
 
         res.header 'Access-Control-Allow-Headers', 'X-Requested-With'
         next()
-
-module.exports = routes
