@@ -1,11 +1,12 @@
 require 'should'
 sinon = require 'sinon'
+should = require 'should'
 request = require 'supertest'
 express = require 'express'
 server = express()
 server.use express.bodyParser()
 routes = require('../routes') server
-config = require('../config')
+config = require '../config'
 Gnote = require '../models/gnote-model'
 
 clearGnotes = (done) ->
@@ -19,7 +20,7 @@ describe 'API', ->
         after (done) ->
             clearGnotes done
 
-        it 'should respond with a 403 if an a referer is not set', (done) ->
+        it 'should respond with a 403 if a referer is not set', (done) ->
             request(server)
                 .post('/gnote')
                 .expect 403, done
@@ -28,4 +29,12 @@ describe 'API', ->
             request(server)
                 .post('/gnote')
                 .set('Referer', config.allowedDomains[0])
-                .expect(200, done);
+                .expect 200, done
+
+        it 'should return a gnote id on successful post', (done) ->
+            request(server)
+                .post('/gnote')
+                .set('Referer', config.allowedDomains[0])
+                .end (err, res) ->
+                    should.exist res.body.id
+                    done()

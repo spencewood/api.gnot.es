@@ -1,4 +1,5 @@
 config = require './config'
+Gnotes = require './controllers/gnote-controller'
 
 module.exports = (server) ->
     ###
@@ -20,4 +21,5 @@ module.exports = (server) ->
      Gnote
     ###
     server.post '/gnote', (req, res) ->
-        res.send 200
+        new Gnotes().add req.body, (err, model) ->
+            res.json id: model._id
