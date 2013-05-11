@@ -38,3 +38,12 @@ describe 'API', ->
                 .end (err, res) ->
                     should.exist res.body.id
                     done()
+
+        it 'should add a gnote when posting valid data', (done) ->
+            request(server)
+                .post('/gnote')
+                .set('Referer', config.allowedDomains[0])
+                .end (err, res) ->
+                    Gnote.count {}, (err, count) ->
+                        count.should.equal 1
+                        done()
