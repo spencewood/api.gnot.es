@@ -13,7 +13,7 @@ clearGnotes = (done) ->
     Gnote.collection.remove done
 
 describe 'API', ->
-    describe 'POST to /gnote', ->
+    describe 'POST to /gnotes', ->
         beforeEach (done) ->
             clearGnotes done
 
@@ -22,18 +22,18 @@ describe 'API', ->
 
         it 'should respond with a 403 if a referer is not set', (done) ->
             request(server)
-                .post('/gnote')
+                .post('/gnotes')
                 .expect 403, done
 
         it 'should return 200 when coming from a valid source', (done) ->
             request(server)
-                .post('/gnote')
+                .post('/gnotes')
                 .set('Referer', config.allowedDomains[0])
                 .expect 200, done
 
         it 'should return a gnote id on successful post', (done) ->
             request(server)
-                .post('/gnote')
+                .post('/gnotes')
                 .set('Referer', config.allowedDomains[0])
                 .end (err, res) ->
                     should.exist res.body.id
@@ -41,9 +41,25 @@ describe 'API', ->
 
         it 'should add a gnote when posting valid data', (done) ->
             request(server)
-                .post('/gnote')
+                .post('/gnotes')
                 .set('Referer', config.allowedDomains[0])
                 .end (err, res) ->
                     Gnote.count {}, (err, count) ->
                         count.should.equal 1
                         done()
+
+    describe 'POST to /users/sendLoginEmail', ->
+        it 'should return 200 if posting a valid email address', (done) ->
+            request(server)
+                .post('/users/sendLoginEmail')
+                .set('Referer', config.allowedDomains[0])
+                .send(emailAddress: 'test@test.com')
+                .expect 200, done
+
+        it 'should return 500 if posting an invalid email address', (done) ->
+            request(server)
+                .post('/users/sendLoginEmail')
+                .set('Referer', config.allowedDomains[0])
+                .send(emailAddress: 'test.com')
+                .expect 500, done
+

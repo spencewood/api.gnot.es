@@ -1,8 +1,10 @@
 Gnote = require '../models/gnote-model'
 
-module.exports = class GnoteController
+class GnoteController
     constructor: ->
 
     add: (data, cb) ->
         gnote = new Gnote data
         gnote.save cb
+
+module.exports = new GnoteController()

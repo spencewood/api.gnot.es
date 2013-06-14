@@ -5,5 +5,12 @@ sinon = require 'sinon'
 config = require '../config'
 
 describe 'User Controller', ->
-    it 'should be able to be instatiated', ->
-        new Controller().should.be.instanceOf Object
+    describe 'sendLoginEmail', ->
+        it 'should emit an email event with address when called', (done) ->
+            emailAddress = 'test@test.com'
+
+            Controller.once 'sendLoginEmail', (address) ->
+                address.should.equal emailAddress
+                done()
+
+            Controller.sendLoginEmail emailAddress

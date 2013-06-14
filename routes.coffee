@@ -1,7 +1,8 @@
 config = require './config'
 Gnotes = require './controllers/gnote-controller'
+Users = require './controllers/user-controller'
 
-module.exports = (server) ->
+module.exports = (server, pubnub) ->
     ###
      Cross-origin for all calls
     ###
@@ -18,8 +19,17 @@ module.exports = (server) ->
         next()
 
     ###
-     Gnote
+     Gnotes
     ###
-    server.post '/gnote', (req, res) ->
-        new Gnotes().add req.body, (err, model) ->
+    server.post '/gnotes', (req, res) ->
+        Gnotes.add req.body, (err, model) ->
             res.json id: model._id
+
+    ###
+     Users
+    ###
+    server.post '/users/sendLoginEmail', (req, res) ->
+        if Users.sendLoginEmail req.body.emailAddress
+            res.send 200
+        else
+            res.send 500
