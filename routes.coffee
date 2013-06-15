@@ -2,15 +2,15 @@ config = require './config'
 Gnotes = require './controllers/gnote-controller'
 Users = require './controllers/user-controller'
 
-module.exports = (server, pubnub) ->
+module.exports = (server) ->
     ###
      Cross-origin for all calls
     ###
     server.all '/*', (req, res, next) ->
         referer = req.header 'Referer'
-        if typeof referer is 'undefined' or config.allowedDomains.indexOf(referer) + '/' is -1
-            res.send 403
-            return
+        # if typeof referer is 'undefined' or config.allowedDomains.indexOf(referer) + '/' is -1
+        #     res.send 403
+        #     return
 
         if config.allowedDomains.indexOf(req.headers.origin) >= 0
             res.header 'Access-Control-Allow-Origin', req.headers.origin
@@ -28,7 +28,7 @@ module.exports = (server, pubnub) ->
     ###
      Users
     ###
-    server.post '/users/sendLoginEmail', (req, res) ->
+    server.post '/users/requestLogin', (req, res) ->
         if Users.sendLoginEmail req.body.emailAddress
             res.send 200
         else

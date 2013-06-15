@@ -48,17 +48,17 @@ describe 'API', ->
                         count.should.equal 1
                         done()
 
-    describe 'POST to /users/sendLoginEmail', ->
+    describe 'POST to /users/requestLogin', ->
         it 'should return 200 if posting a valid email address', (done) ->
             request(server)
-                .post('/users/sendLoginEmail')
+                .post('/users/requestLogin')
                 .set('Referer', config.allowedDomains[0])
                 .send(emailAddress: 'test@test.com')
                 .expect 200, done
 
         it 'should return 500 if posting an invalid email address', (done) ->
             request(server)
-                .post('/users/sendLoginEmail')
+                .post('/users/requestLogin')
                 .set('Referer', config.allowedDomains[0])
                 .send(emailAddress: 'test.com')
                 .expect 500, done

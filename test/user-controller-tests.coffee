@@ -5,7 +5,7 @@ sinon = require 'sinon'
 config = require '../config'
 
 describe 'User Controller', ->
-    describe 'sendLoginEmail', ->
+    describe 'requestLogin', ->
         it 'should emit an email event with address when called', (done) ->
             emailAddress = 'test@test.com'
 

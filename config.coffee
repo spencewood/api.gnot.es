@@ -9,6 +9,10 @@ module.exports =
             process.env.MONGOHQ_URL or
             'mongodb://localhost/Gnotes'
 
+    pubnub:
+        subscribe_key: process.env.PUBNUB_SUBSCRIBE_KEY
+        publish_key: process.env.PUBNUB_PUBLISH_KEY
+
     ###
      Cross-origin allowed domains
     ###
