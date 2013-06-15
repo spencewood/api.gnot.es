@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
-schema = require './schemas/gnote-schema'
+schema = require './schemas/token-schema'
 config = require('../config').database
 db = mongoose.createConnection config.url
 
-module.exports = db.model 'Gnote', schema
+module.exports = db.model 'Token', schema

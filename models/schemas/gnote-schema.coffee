@@ -1,5 +1,10 @@
 mongoose = require 'mongoose'
+timestamps = require 'mongoose-timestamp'
 
-module.exports = new mongoose.Schema
+schema = new mongoose.Schema
     content:
         type: String
+
+schema.plugin timestamps
+
+module.exports = schema
