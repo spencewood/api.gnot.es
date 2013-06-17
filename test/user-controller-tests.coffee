@@ -6,11 +6,12 @@ config = require '../config'
 
 describe 'User Controller', ->
     describe 'requestLogin', ->
-        it 'should emit an email event with address when called', (done) ->
+        it 'should emit an email event with email and token when called', (done) ->
             emailAddress = 'test@test.com'
 
-            Controller.once 'sendLoginEmail', (address) ->
-                address.should.equal emailAddress
+            Controller.once 'sendLoginEmail', (message) ->
+                message.email.should.equal emailAddress
+                message.token.should.not.be.null
                 done()
 
             Controller.sendLoginEmail emailAddress

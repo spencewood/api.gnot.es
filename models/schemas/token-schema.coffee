@@ -5,6 +5,11 @@ schema = new mongoose.Schema
     token:
         type: String
         unique: true
+    email:
+        type: String
+        unique: true
+        trim: true
+        required: true
     issued:
         type: Date
         default: Date.now

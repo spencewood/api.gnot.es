@@ -7,7 +7,9 @@ pubnub = require('pubnub').init
     subscribe_key: config.pubnub.subscribe_key
 
 # User events
-Users.on 'sendLoginEmail', (emailAddress) ->
+Users.on 'sendLoginEmail', (message) ->
     pubnub.publish
         channel: 'login_email'
-        message: emailAddress
+        message:
+            email: message
+            token: message
