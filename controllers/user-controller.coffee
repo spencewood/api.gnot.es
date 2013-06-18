@@ -1,6 +1,6 @@
 {EventEmitter} = require 'events'
 User = require '../models/user-model'
-Token = require '../models/token-model'
+LoginToken = require '../models/login-token-model'
 validator = require 'email-validator'
 
 class UserController extends EventEmitter
@@ -9,7 +9,7 @@ class UserController extends EventEmitter
     sendLoginEmail: (email) ->
         return false unless validator.validate email
 
-        new Token(email: email).save (err, model) =>
+        new LoginToken(email: email).save (err, model) =>
             console.error err if err?
             @emit 'sendLoginEmail',
                 email: email
