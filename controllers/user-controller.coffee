@@ -10,11 +10,16 @@ class UserController extends EventEmitter
         return false unless validator.validate email
 
         new LoginToken(email: email).save (err, model) =>
-            console.error err if err?
+            if err?
+                console.error err
+                return
             @emit 'sendLoginEmail',
                 email: email
                 token: model.token
 
         true
+
+    login: (token) ->
+        
 
 module.exports = new UserController()

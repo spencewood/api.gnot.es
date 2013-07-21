@@ -1,4 +1,3 @@
-require 'should'
 sinon = require 'sinon'
 should = require 'should'
 request = require 'supertest'

@@ -1,6 +1,14 @@
+passport = require 'passport'
+BearerStrategy = require('passport-http-bearer').Strategy
 config = require './config'
 Gnotes = require './controllers/gnote-controller'
 Users = require './controllers/user-controller'
+
+passport.use new BearerStrategy (token, done) ->
+    Users.validate token: token, (isSuccess) ->
+        if isSuccess
+            return done err
+        #unless 
 
 module.exports = (server) ->
     ###
@@ -29,7 +37,8 @@ module.exports = (server) ->
      Users
     ###
     server.post '/users/requestLogin', (req, res) ->
-        if Users.sendLoginEmail req.body.emailAddress
-            res.send 200
-        else
-            res.send 500
+        if Users.sendLoginEmail req.body.emailAddress then res.send 200 else res.send 500
+
+    server.get '/users/login', (req, res) ->
+        Users.login req.login_token, (err, model) ->
+            res.json id: model._id

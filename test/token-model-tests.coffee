@@ -9,6 +9,6 @@ describe 'Login Token Model', ->
             should.exist err
 
     it 'should generate a uuid when saving', (done) ->
-        token = new LoginToken(email: 'test@test.com').save (err, model) ->
+        new LoginToken(email: 'test@test.com').save (err, model) ->
             model.token.should.not.be.null
             done()

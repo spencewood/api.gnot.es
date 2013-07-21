@@ -12,8 +12,7 @@ schema = new mongoose.Schema
     issued:
         type: Date
         default: Date.now
-    expires:
-        type: Date
+    isUsed: Boolean
 
 schema.pre 'save', (next) ->
     @token = uuid.v4()

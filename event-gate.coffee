@@ -10,6 +10,4 @@ pubnub = require('pubnub').init
 Users.on 'sendLoginEmail', (message) ->
     pubnub.publish
         channel: 'login_email'
-        message:
-            email: message
-            token: message
+        message: message
